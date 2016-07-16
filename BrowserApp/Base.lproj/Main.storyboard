@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10117" systemVersion="15F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="BYZ-38-t0r">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10117" systemVersion="15F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="eII-ii-hGY">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
@@ -14,14 +14,94 @@
                         <viewControllerLayoutGuide type="bottom" id="wfy-db-euE"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
-                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <rect key="frame" x="0.0" y="64" width="600" height="536"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Son-kK-4Xq">
+                                <rect key="frame" x="0.0" y="492" width="600" height="44"/>
+                                <items>
+                                    <barButtonItem title="&lt;" id="HcG-FR-UYF">
+                                        <connections>
+                                            <action selector="back:" destination="BYZ-38-t0r" id="aEd-Oo-iv3"/>
+                                        </connections>
+                                    </barButtonItem>
+                                    <barButtonItem width="42" style="plain" systemItem="fixedSpace" id="MD8-zA-rN0"/>
+                                    <barButtonItem title="&gt;" id="h3w-7k-TyS">
+                                        <connections>
+                                            <action selector="forward:" destination="BYZ-38-t0r" id="dtg-6y-477"/>
+                                        </connections>
+                                    </barButtonItem>
+                                    <barButtonItem style="plain" systemItem="flexibleSpace" id="3Cq-ow-mrn"/>
+                                    <barButtonItem title="R" id="8Xw-ur-WyO">
+                                        <connections>
+                                            <action selector="reload:" destination="BYZ-38-t0r" id="bhP-3J-sW1"/>
+                                        </connections>
+                                    </barButtonItem>
+                                </items>
+                            </toolbar>
+                        </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="Son-kK-4Xq" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="3pC-cB-aFI"/>
+                            <constraint firstAttribute="trailing" secondItem="Son-kK-4Xq" secondAttribute="trailing" id="d2U-i8-rzh"/>
+                            <constraint firstAttribute="bottom" secondItem="Son-kK-4Xq" secondAttribute="bottom" id="zAe-I8-qPH"/>
+                        </constraints>
                     </view>
                     <extendedEdge key="edgesForExtendedLayout" bottom="YES"/>
+                    <navigationItem key="navigationItem" id="6Ds-sd-3KN">
+                        <nil key="title"/>
+                        <view key="titleView" contentMode="scaleToFill" id="9V4-2o-LRO">
+                            <rect key="frame" x="180" y="6" width="240" height="33"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <subviews>
+                                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="uHr-EC-3oQ">
+                                    <rect key="frame" x="0.0" y="0.0" width="240" height="33"/>
+                                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                    <textInputTraits key="textInputTraits" autocorrectionType="no" keyboardType="URL" returnKeyType="go"/>
+                                    <connections>
+                                        <outlet property="delegate" destination="BYZ-38-t0r" id="gZ6-6C-ggy"/>
+                                    </connections>
+                                </textField>
+                            </subviews>
+                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                            <constraints>
+                                <constraint firstAttribute="bottom" secondItem="uHr-EC-3oQ" secondAttribute="bottom" id="XCV-Um-giG"/>
+                                <constraint firstItem="uHr-EC-3oQ" firstAttribute="top" secondItem="9V4-2o-LRO" secondAttribute="top" id="daP-xC-hnp"/>
+                                <constraint firstItem="uHr-EC-3oQ" firstAttribute="leading" secondItem="9V4-2o-LRO" secondAttribute="leading" id="qsc-S2-yQ9"/>
+                                <constraint firstAttribute="trailing" secondItem="uHr-EC-3oQ" secondAttribute="trailing" id="yw1-O0-Wq7"/>
+                            </constraints>
+                        </view>
+                    </navigationItem>
+                    <nil key="simulatedBottomBarMetrics"/>
+                    <connections>
+                        <outlet property="backButton" destination="HcG-FR-UYF" id="Lh6-4d-oj4"/>
+                        <outlet property="barView" destination="9V4-2o-LRO" id="GfB-AS-08d"/>
+                        <outlet property="forwardButton" destination="h3w-7k-TyS" id="MZn-Uo-gvA"/>
+                        <outlet property="reloadButton" destination="8Xw-ur-WyO" id="70p-j4-0Sz"/>
+                        <outlet property="urlField" destination="uHr-EC-3oQ" id="PXX-ah-esN"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
+            <point key="canvasLocation" x="1117" y="292"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="35u-zR-gbq">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="eII-ii-hGY" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="7wc-e9-8Ht">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="BYZ-38-t0r" kind="relationship" relationship="rootViewController" id="j0G-yx-Ufx"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="ZG9-P2-FoU" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="290" y="-400"/>
         </scene>
     </scenes>
 </document>
