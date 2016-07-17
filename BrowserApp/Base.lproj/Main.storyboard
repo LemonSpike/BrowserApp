@@ -3,6 +3,7 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <scenes>
         <!--View Controller-->
@@ -32,6 +33,12 @@
                                         </connections>
                                     </barButtonItem>
                                     <barButtonItem style="plain" systemItem="flexibleSpace" id="3Cq-ow-mrn"/>
+                                    <barButtonItem title="History" id="QhP-rx-tuM">
+                                        <connections>
+                                            <action selector="history:" destination="BYZ-38-t0r" id="DGV-jK-90t"/>
+                                        </connections>
+                                    </barButtonItem>
+                                    <barButtonItem style="plain" systemItem="flexibleSpace" id="2j6-I5-dbp"/>
                                     <barButtonItem title="R" id="8Xw-ur-WyO">
                                         <connections>
                                             <action selector="reload:" destination="BYZ-38-t0r" id="bhP-3J-sW1"/>
@@ -39,11 +46,17 @@
                                     </barButtonItem>
                                 </items>
                             </toolbar>
+                            <progressView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" progress="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="Exg-te-atY">
+                                <rect key="frame" x="0.0" y="0.0" width="600" height="2"/>
+                            </progressView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="Son-kK-4Xq" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="3pC-cB-aFI"/>
+                            <constraint firstItem="Exg-te-atY" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" constant="-20" id="61f-QH-UJ2"/>
+                            <constraint firstItem="Exg-te-atY" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" id="TsX-Kh-8hP"/>
                             <constraint firstAttribute="trailing" secondItem="Son-kK-4Xq" secondAttribute="trailing" id="d2U-i8-rzh"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="Exg-te-atY" secondAttribute="trailing" constant="-20" id="y2J-ey-qfv"/>
                             <constraint firstAttribute="bottom" secondItem="Son-kK-4Xq" secondAttribute="bottom" id="zAe-I8-qPH"/>
                         </constraints>
                     </view>
@@ -77,13 +90,60 @@
                         <outlet property="backButton" destination="HcG-FR-UYF" id="Lh6-4d-oj4"/>
                         <outlet property="barView" destination="9V4-2o-LRO" id="GfB-AS-08d"/>
                         <outlet property="forwardButton" destination="h3w-7k-TyS" id="MZn-Uo-gvA"/>
+                        <outlet property="progressView" destination="Exg-te-atY" id="3E3-dJ-OaN"/>
                         <outlet property="reloadButton" destination="8Xw-ur-WyO" id="70p-j4-0Sz"/>
-                        <outlet property="urlField" destination="uHr-EC-3oQ" id="PXX-ah-esN"/>
+                        <outlet property="urlField" destination="uHr-EC-3oQ" id="dnG-FH-ULf"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1117" y="292"/>
+        </scene>
+        <!--History View Controller-->
+        <scene sceneID="tvn-FX-b0N">
+            <objects>
+                <tableViewController storyboardIdentifier="HistoryViewController" id="5cs-Og-Xbx" customClass="HistoryViewController" customModule="BrowserApp" customModuleProvider="target" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="d8h-2d-Veh">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <view key="tableFooterView" contentMode="scaleToFill" id="gGw-dH-V1c">
+                            <rect key="frame" x="0.0" y="72" width="600" height="44"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <subviews>
+                                <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="piW-aT-hus">
+                                    <rect key="frame" x="290" y="12" width="20" height="20"/>
+                                </activityIndicatorView>
+                            </subviews>
+                            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            <constraints>
+                                <constraint firstItem="piW-aT-hus" firstAttribute="centerY" secondItem="gGw-dH-V1c" secondAttribute="centerY" id="8bg-q9-I72"/>
+                                <constraint firstItem="piW-aT-hus" firstAttribute="centerX" secondItem="gGw-dH-V1c" secondAttribute="centerX" id="MtO-pf-zA0"/>
+                            </constraints>
+                        </view>
+                        <prototypes>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="Website" id="eGa-4M-iak">
+                                <rect key="frame" x="0.0" y="28" width="600" height="44"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="eGa-4M-iak" id="d53-ue-18p">
+                                    <rect key="frame" x="0.0" y="0.0" width="600" height="43"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                </tableViewCellContentView>
+                            </tableViewCell>
+                        </prototypes>
+                        <connections>
+                            <outlet property="dataSource" destination="5cs-Og-Xbx" id="IVv-RE-5Vy"/>
+                            <outlet property="delegate" destination="5cs-Og-Xbx" id="Lwo-ge-nrl"/>
+                        </connections>
+                    </tableView>
+                    <connections>
+                        <outlet property="activityIndicator" destination="piW-aT-hus" id="C1x-1h-bir"/>
+                        <outlet property="loadingView" destination="gGw-dH-V1c" id="x0r-wi-30a"/>
+                    </connections>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="TOn-DN-oUq" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1758" y="292"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="35u-zR-gbq">

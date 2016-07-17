@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4E1C99CA1D3C2BA20009F799 /* HistoryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E1C99C91D3C2BA20009F799 /* HistoryViewController.swift */; };
 		4E3BD2461D395D130074385E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E3BD2451D395D130074385E /* AppDelegate.swift */; };
 		4E3BD2481D395D130074385E /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E3BD2471D395D130074385E /* ViewController.swift */; };
 		4E3BD24B1D395D130074385E /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4E3BD2491D395D130074385E /* Main.storyboard */; };
@@ -15,6 +16,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		4E1C99C91D3C2BA20009F799 /* HistoryViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HistoryViewController.swift; sourceTree = "<group>"; };
 		4E3BD2421D395D130074385E /* BrowserApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BrowserApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4E3BD2451D395D130074385E /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		4E3BD2471D395D130074385E /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -56,6 +58,7 @@
 			children = (
 				4E3BD2451D395D130074385E /* AppDelegate.swift */,
 				4E3BD2471D395D130074385E /* ViewController.swift */,
+				4E1C99C91D3C2BA20009F799 /* HistoryViewController.swift */,
 				4E3BD2491D395D130074385E /* Main.storyboard */,
 				4E3BD24C1D395D130074385E /* Assets.xcassets */,
 				4E3BD24E1D395D130074385E /* LaunchScreen.storyboard */,
@@ -135,6 +138,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4E1C99CA1D3C2BA20009F799 /* HistoryViewController.swift in Sources */,
 				4E3BD2481D395D130074385E /* ViewController.swift in Sources */,
 				4E3BD2461D395D130074385E /* AppDelegate.swift in Sources */,
 			);
@@ -288,6 +292,7 @@
 				4E3BD2561D395D130074385E /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

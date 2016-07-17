@@ -9,7 +9,7 @@
 import UIKit
 import WebKit
 
-class ViewController: UIViewController, UITextFieldDelegate, WKNavigationDelegate {
+class ViewController: UIViewController, UITextFieldDelegate, WKNavigationDelegate, UIPopoverPresentationControllerDelegate {
     
     var webView: WKWebView!
     
@@ -18,7 +18,19 @@ class ViewController: UIViewController, UITextFieldDelegate, WKNavigationDelegat
     @IBOutlet weak var backButton: UIBarButtonItem!
     @IBOutlet weak var forwardButton: UIBarButtonItem!
     @IBOutlet weak var reloadButton: UIBarButtonItem!
+    @IBOutlet weak var progressView: UIProgressView!
     
+    @IBAction func history(sender: UIBarButtonItem) {
+        let storyboard : UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
+        let vc = storyboard.instantiateViewControllerWithIdentifier("HistoryViewController") as! HistoryViewController
+        vc.webItems = webView.backForwardList
+        vc.modalPresentationStyle = UIModalPresentationStyle.Popover
+        let popover: UIPopoverPresentationController = vc.popoverPresentationController!
+        popover.barButtonItem = sender
+        popover.delegate = self
+        presentViewController(vc, animated: true, completion:nil)
+        
+    }
     @IBAction func back(sender: UIBarButtonItem) {
         webView.goBack()
     }
@@ -35,7 +47,9 @@ class ViewController: UIViewController, UITextFieldDelegate, WKNavigationDelegat
         barView.frame = CGRect(x:0, y: 0, width: view.frame.width, height: 30)
         setupWebView()
         self.webView.navigationDelegate = self
+        self.webView.addObserver(self, forKeyPath: "estimatedProgress", options: .New, context: nil)
         self.webView.addObserver(self, forKeyPath: "loading", options: .New, context: nil)
+        self.webView.addObserver(self, forKeyPath: "title", options: .New, context: nil)
         loadHomepage()
         backButton.enabled = false
         forwardButton.enabled = false
@@ -47,6 +61,27 @@ class ViewController: UIViewController, UITextFieldDelegate, WKNavigationDelegat
         presentViewController(alert, animated: true, completion: nil)
     }
     
+    /*
+     func webView(webView: WKWebView, decidePolicyForNavigationResponse navigationResponse: WKNavigationResponse, decisionHandler: (WKNavigationResponsePolicy) -> Void) {
+     var response = navigationResponse.response as! NSHTTPURLResponse
+     print(response.allHeaderFields)
+     if response.statusCode == 404 || response.statusCode == 302 {
+     // alert..
+     decisionHandler(.Cancel)
+     }
+     decisionHandler(.Allow)
+     }
+     */
+    
+    func webView(webView: WKWebView, decidePolicyForNavigationAction navigationAction: WKNavigationAction, decisionHandler: ((WKNavigationActionPolicy) -> Void)) {
+        if (navigationAction.navigationType == WKNavigationType.LinkActivated && !navigationAction.request.URL!.host!.lowercaseString.hasPrefix("www.appcoda.com")) {
+            UIApplication.sharedApplication().openURL(navigationAction.request.URL!)
+            decisionHandler(WKNavigationActionPolicy.Cancel)
+        } else {
+            decisionHandler(WKNavigationActionPolicy.Allow)
+        }
+    }
+    
     func setupWebView() {
         self.webView = WKWebView()
         self.webView.translatesAutoresizingMaskIntoConstraints = false
@@ -56,27 +91,20 @@ class ViewController: UIViewController, UITextFieldDelegate, WKNavigationDelegat
         let leading = NSLayoutConstraint(item: webView, attribute: .Leading, relatedBy: .Equal, toItem: view, attribute: .Leading, multiplier: 1, constant: 0)
         let top = NSLayoutConstraint(item: webView, attribute: .Top, relatedBy: .Equal, toItem: view, attribute: .Top, multiplier: 1, constant: 0)
         
-        self.view.addSubview(webView)
+        view.insertSubview(webView, belowSubview: progressView)
         self.view.addConstraints([height, width, leading, top])
     }
     
     func loadHomepage() {
-        let url = NSURL(string:"http://www.facebook.com")
+        let url = NSURL(string:"http://www.appcoda.com")
         let request = NSURLRequest(URL:url!)
         self.webView.loadRequest(request)
     }
     
     func textFieldShouldReturn(textField: UITextField) -> Bool {
         urlField.resignFirstResponder()
-        
         let url = NSURL(string: urlField.text!)!
-        if UIApplication.sharedApplication().canOpenURL(url) {
         webView.loadRequest(NSURLRequest(URL: url))
-        } else {
-            let alert = UIAlertController(title: "Error", message: "Invalid URL! Please enter a valid URL", preferredStyle: .Alert)
-            alert.addAction(UIAlertAction(title: "Ok", style: .Default, handler: nil))
-            presentViewController(alert, animated: true, completion: nil)
-        }
         return false
     }
     
@@ -85,6 +113,18 @@ class ViewController: UIViewController, UITextFieldDelegate, WKNavigationDelegat
             backButton.enabled = webView.canGoBack
             forwardButton.enabled = webView.canGoForward
         }
+        if (keyPath == "estimatedProgress") {
+            progressView.hidden = webView.estimatedProgress == 1
+            progressView.setProgress(Float(webView.estimatedProgress), animated: true)
+        }
+        if (keyPath == "title") {
+            self.title = self.webView.title
+        }
+    }
+    
+    func webView(webView: WKWebView, didFinishNavigation navigation: WKNavigation!) {
+        progressView.setProgress(0.0, animated: false)
+        print(webView.backForwardList)
     }
     
     override func viewWillTransitionToSize(size: CGSize, withTransitionCoordinator coordinator: UIViewControllerTransitionCoordinator) {
@@ -96,6 +136,16 @@ class ViewController: UIViewController, UITextFieldDelegate, WKNavigationDelegat
         // Dispose of any resources that can be recreated.
     }
     
+    func presentationController(controller: UIPresentationController, viewControllerForAdaptivePresentationStyle style: UIModalPresentationStyle) -> UIViewController? {
+        let navigationController = UINavigationController(rootViewController: controller.presentedViewController)
+        let doneButton = UIBarButtonItem(title: "Done", style: .Done, target: self, action: #selector(ViewController.dismiss))
+        navigationController.topViewController?.navigationItem.rightBarButtonItem = doneButton
+        return navigationController
+    }
+    
+    func dismiss() {
+        self.dismissViewControllerAnimated(true, completion: nil)
+    }
     
 }
 
